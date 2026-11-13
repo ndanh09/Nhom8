@@ -12,10 +12,11 @@ import modeldao.*;
 import model.dangkytaikhoan;
 import model.quantrivien;
 import util.AdminGuard;
+import model.NhanVienBanHang;
 
 @WebServlet(name = "dangnhap", urlPatterns = {"/dangnhapsvl"})
 public class dangnhap extends HttpServlet {
-
+NhanVienBanHangDAO nhanVienDAO = new NhanVienBanHangDAO();
     private static final String DA_KHOA = "Đã khóa";
 
     dangnhapdao dangnhapdao = new dangnhapdao();
@@ -119,29 +120,56 @@ public class dangnhap extends HttpServlet {
             return;
         }
 
-        // ----- Tài khoản người dùng thường trong DB -----
-        dangkytaikhoan userByEmail = dangnhapdao.findByEmail(email);
+      
+// ----- Tài khoản nhân viên bán hàng -----
+NhanVienBanHang nhanVien = nhanVienDAO.timTheoEmail(email);
 
-        if (userByEmail == null) {
-            baoLoi(request, response, "Tài khoản không tồn tại");
-            return;
-        }
+if (nhanVien != null) {
 
-        if (DA_KHOA.equals(userByEmail.getTrangthai())) {
-            baoLoi(request, response, "Tài khoản đã bị khóa");
-            return;
-        }
-
-        if (khopMatKhau(userByEmail.getMatkhau(), matkhau)) {
-            batDauPhienKhach(request, userByEmail);
-            response.sendRedirect(request.getContextPath() + "/nguoidungservlet");
-        } else {
-            baoLoi(request, response, "Sai mật khẩu");
-        }
+    if ("Khóa".equals(nhanVien.getTrangthai())) {
+        baoLoi(request, response, "Tài khoản đã bị khóa");
+        return;
     }
 
-    @Override
-    public String getServletInfo() {
-        return "Short description";
+    if (khopMatKhau(nhanVien.getMatkhau(), matkhau)) {
+
+        HttpSession session = request.getSession();
+        request.changeSessionId();
+
+        session.removeAttribute("user");
+        session.setAttribute("email", nhanVien.getEmail());
+        session.setAttribute("nhanVienBanHang", nhanVien);
+        session.setAttribute("isAdmin", true);
+        session.setAttribute(AdminGuard.VAI_TRO, AdminGuard.QUANLY);
+
+        response.sendRedirect(
+            request.getContextPath() + "/nguoibanservlet"
+        );
+        return;
+
+    } else {
+        baoLoi(request, response, "Sai mật khẩu");
+        return;
     }
 }
+
+// ----- Tài khoản khách hàng thường trong DB -----
+dangkytaikhoan userByEmail = dangnhapdao.findByEmail(email);
+
+if (userByEmail == null) {
+    baoLoi(request, response, "Tài khoản không tồn tại");
+    return;
+}
+
+if (DA_KHOA.equals(userByEmail.getTrangthai())) {
+    baoLoi(request, response, "Tài khoản đã bị khóa");
+    return;
+}
+
+if (khopMatKhau(userByEmail.getMatkhau(), matkhau)) {
+    batDauPhienKhach(request, userByEmail);
+    response.sendRedirect(request.getContextPath() + "/nguoidungservlet");
+} else {
+    baoLoi(request, response, "Sai mật khẩu");
+}
+    }}
