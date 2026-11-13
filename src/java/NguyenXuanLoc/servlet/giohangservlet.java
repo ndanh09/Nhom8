@@ -1,4 +1,4 @@
-package servlet;
+package NguyenXuanLoc.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
