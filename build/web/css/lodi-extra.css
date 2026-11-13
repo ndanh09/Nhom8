@@ -1,0 +1,199 @@
+/* =====================================================================
+   LODI - phần bổ sung cho các thành phần chỉ có ở bản JSP (SD2001)
+   Dùng CHUNG bảng màu với css/lodi.css: đen than #0d0d0e, vàng gold #c9a24b,
+   nền ngà #f6f3ec, thẻ trắng, viền #e6dfcd.
+   ===================================================================== */
+/* gợi ý tìm kiếm ở header */
+.search{position:relative}
+#searchResult{position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--ink2);border:1px solid var(--gold);border-radius:8px;overflow:hidden auto;display:none;z-index:50;max-height:300px;box-shadow:0 12px 28px rgba(0,0,0,.4)}
+.search-item{padding:10px 14px;color:#fff;cursor:pointer;border-bottom:1px solid #26262b;font-size:14px}
+.search-item:hover{background:var(--gold-grad);color:#1b1405}
+.search-item.is-empty{cursor:default;color:var(--silver)}
+.search-item.is-empty:hover{background:transparent;color:var(--silver)}
+/* badge số lượng giỏ (đã có trong lodi.css, đảm bảo hiển thị trong header) */
+.user a .cart-count{margin-left:6px}
+/* trạng thái hàng trên thẻ sản phẩm */
+.card.disabled-card{opacity:.6;filter:grayscale(.25)}
+.tag.out{background:#555;color:#fff}
+.stock{display:inline-block;font-size:12px;font-weight:bold;letter-spacing:.5px;padding:3px 10px;border-radius:20px;border:1px solid;margin:0 0 8px}
+.stock.in{color:#2f7d4a;border-color:#a9d9b8;background:#e8f5ec}
+.stock.out{color:#a12a2a;border-color:#f3b6b1;background:#fdecea}
+.stock.off{color:#6b685f;border-color:#d8d3c4;background:#f1eee5}
+.card .actions{display:flex;gap:8px;margin-top:12px}
+.card .actions .btn{margin-top:0;flex:1;width:auto;padding:10px 6px;font-size:14px}
+.card .btn[disabled]{opacity:.55;cursor:not-allowed;filter:none}
+.grid-empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:30px 0}
+/* nút lên đầu trang */
+.back-top{position:fixed;right:24px;bottom:24px;width:46px;height:46px;border-radius:50%;display:none;align-items:center;justify-content:center;background:var(--gold-grad);color:#1b1405;cursor:pointer;z-index:20;box-shadow:0 8px 20px rgba(0,0,0,.3);font-weight:bold;transition:.25s}
+.back-top:hover{transform:translateY(-4px)}
+.more{text-align:center;margin:30px 0 6px}
+/* chips lọc danh mục: trạng thái đang chọn (cùng phong cách .chips của LODI) */
+.chips a.category-btn{cursor:pointer}
+.chips a.active{background:var(--ink);color:var(--gold);border-color:var(--ink)}
+/* nhấp nháy vàng khi được tìm tới (thay cho goldFlash cũ, dùng màu gold của LODI) */
+@keyframes lodiFlash{0%,100%{box-shadow:0 2px 8px rgba(40,30,0,.05)}25%,75%{box-shadow:0 0 0 4px rgba(201,162,75,.65),0 14px 28px rgba(138,106,28,.3)}50%{box-shadow:0 0 0 2px rgba(201,162,75,.3)}}
+.product-highlight{animation:lodiFlash 1.4s ease 2;border-color:var(--gold)!important}
+
+/* ===== CHI TIẾT SẢN PHẨM: các phần tử do JS của SD tạo ra, mang phong cách .thumbs/.options của LODI ===== */
+.breadcrumb{margin:22px 0 0;font-size:13.5px;color:var(--muted)}
+.breadcrumb a:hover{color:var(--gold-dark)}
+.breadcrumb span{color:var(--text);font-weight:600}
+.thumbs .thumb-item{width:84px;height:84px;border-radius:6px;border:2px solid var(--line);overflow:hidden;background:#f3f0e8;cursor:pointer}
+.thumbs .thumb-item.active{border-color:var(--gold)}
+.thumbs .thumb-item img{width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply}
+.size-options{display:inline-flex;flex-wrap:wrap;gap:8px;vertical-align:middle}
+.size-btn{border:1px solid var(--line);padding:6px 16px;border-radius:5px;background:var(--bg);font:inherit;cursor:pointer;transition:.15s}
+.size-btn:hover{border-color:var(--gold)}
+.size-btn.active{border-color:var(--gold);color:var(--gold-dark);background:#fbf3dc;font-weight:bold}
+.size-btn.unavailable{opacity:.45;cursor:not-allowed;text-decoration:line-through}
+.size-btn.unavailable:hover{border-color:var(--line)}
+.info-stock-badge{font-weight:bold}
+.info-stock-badge.stock-in{color:#2f7d4a}
+.info-stock-badge.stock-out{color:#a12a2a}
+.info-stock-badge.stock-stop{color:#6b685f}
+.qtybox{display:inline-flex;align-items:center;gap:6px;vertical-align:middle}
+.qtybox button{width:34px;height:34px;border:1px solid var(--line);background:var(--bg);border-radius:6px;font-size:18px;cursor:pointer;line-height:1}
+.qtybox button:hover{border-color:var(--gold);color:var(--gold-dark)}
+.qtybox .qty{width:56px;margin:0;text-align:center;padding:8px}
+.detail .btn[disabled]{opacity:.55;cursor:not-allowed}
+
+/* ===== GIỎ HÀNG (JSP): bổ sung cho bảng .cart / .summary của LODI ===== */
+.cart-tools{display:flex;gap:14px;align-items:center;justify-content:space-between;margin-bottom:12px}
+.cart-tools .hint-line{font-size:13px;color:var(--muted)}
+.cart-tools .btn{padding:9px 16px;font-size:14px;white-space:nowrap}
+.table-scroll{overflow-x:auto;border-radius:10px}
+.cart table{min-width:640px}
+.cart td{font-size:14.5px}
+.cart select.size-select{padding:7px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);font:inherit}
+.cart select.size-select:focus,.voucher-input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,75,.22)}
+.cart .line-total{color:var(--gold-dark)}
+.text-danger{color:#a12a2a;font-weight:bold}.text-warning{color:#b9770e;font-weight:bold}.text-success{color:#2f7d4a;font-weight:bold}
+.cart .row-actions{white-space:nowrap}
+.btn.mini{padding:7px 12px;font-size:13px;margin-right:6px}
+.summary .btn.dark{display:block;width:100%;margin-top:10px;text-align:center}
+.summary .vlabel{display:block;font-size:13px;font-weight:bold;letter-spacing:.5px;margin-bottom:6px}
+.summary .vrow{display:flex;gap:8px}
+.summary .voucher-input{flex:1;min-width:0;padding:9px 12px;border:1px solid var(--line);border-radius:6px;background:var(--bg);font:inherit}
+.summary .vrow .btn{width:auto;margin:0;display:inline-block}
+.summary .vnote{font-size:12.5px;color:var(--muted);margin-top:8px}
+.summary .voucher-success{margin-top:10px;padding:9px 12px;border-radius:8px;background:#e8f5ec;border:1px solid #a9d9b8;color:#17502c;font-size:14px}
+.summary .vlink{display:inline-block;margin:10px 0 4px;font-size:13px;color:var(--gold-dark);font-weight:bold}
+.summary .discount{color:#2f7d4a}
+.summary .btn-checkout{display:block}
+@media(max-width:800px){.cart-tools{flex-direction:column;align-items:flex-start}}
+.container>.alert:first-child,main>.alert:first-child{margin-top:22px}
+
+/* ===== BẢNG DỮ LIỆU dùng chung (đơn hàng, quản trị...) - cùng kiểu với bảng giỏ hàng của LODI ===== */
+.data-table{width:100%;background:#fff;border-collapse:collapse;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.data-table th{background:var(--ink);color:var(--gold);padding:13px 12px;text-align:left;letter-spacing:1px;font-size:14px;white-space:nowrap}
+.data-table td{padding:12px;border-bottom:1px solid var(--line);vertical-align:middle;font-size:14.5px}
+.data-table tbody tr:hover{background:#fbf8ee}
+.data-table .pname{font-weight:600}
+.data-table .empty-text{text-align:center;color:var(--muted);padding:34px 12px}
+.gold{color:var(--gold-dark)}
+.data-table td .btn.mini{margin:0 0 6px;display:inline-block}
+.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--gold);color:var(--gold-dark);filter:none}
+/* nhãn trạng thái */
+.badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:12.5px;font-weight:bold;border:1px solid;white-space:nowrap}
+.badge.status-pending{color:#8a6a1c;background:#fbf3dc;border-color:#ead594}
+.badge.status-shipping{color:#17407a;background:#eaf1fb;border-color:#b5cdee}
+.badge.status-delivered{color:#6b4a05;background:#fff6e0;border-color:#f0d58a}
+.badge.status-completed{color:#17502c;background:#e8f5ec;border-color:#a9d9b8}
+.badge.status-cancelled{color:#7a1c16;background:#fdecea;border-color:#f3b6b1}
+
+/* ===== MÃ GIẢM GIÁ: thẻ coupon theo bảng màu LODI ===== */
+.voucher-search-box{margin:14px 0 6px;max-width:520px}
+.voucher-search-box input{width:100%;padding:11px 14px;border:1px solid var(--line);border-radius:6px;font:inherit;background:#fff}
+.voucher-search-box input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,75,.22)}
+.coupon-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin:22px 0}
+.coupon-card{display:flex;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(40,30,0,.05);transition:.25s}
+.coupon-card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 14px 28px rgba(138,106,28,.2)}
+.coupon-side{flex:none;width:150px;background:var(--ink);color:var(--gold);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:16px 10px;border-right:2px dashed rgba(201,162,75,.5)}
+.coupon-side b{font-family:var(--font-head);font-size:24px;line-height:1.15}
+.coupon-side small{margin-top:6px;font-size:11.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--silver)}
+.coupon-body{flex:1;padding:16px 18px;min-width:0}
+.coupon-code{display:inline-block;font-weight:bold;letter-spacing:2px;color:var(--gold-dark);background:#fbf3dc;border:1px dashed var(--gold);border-radius:5px;padding:3px 12px}
+.coupon-name{font-family:var(--font-head);font-weight:700;font-size:17px;margin:10px 0 6px;color:var(--ink)}
+.coupon-info{list-style:none;font-size:13.5px;color:var(--muted);margin-bottom:12px}
+.coupon-info li{margin-bottom:2px}
+.coupon-actions{display:flex;gap:8px}
+.coupon-actions .btn{margin:0}
+.search-empty{display:none}.search-empty.show{display:block}
+.copy-toast.show{display:flex!important}
+@media(max-width:800px){.coupon-grid{grid-template-columns:1fr}.coupon-side{width:110px}}
+
+/* ===== LIÊN HỆ ===== */
+.hello-line{margin-bottom:10px;color:var(--gold-dark)}
+.links-container{display:flex;flex-direction:column;gap:10px}
+.links-container .btn{margin:0;text-align:center}
+.stat-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+.stat-box{text-align:center;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px 6px}
+.stat-box b{display:block;font-family:var(--font-head);font-size:20px;color:var(--gold-dark)}
+.stat-box span{font-size:12.5px;color:var(--muted)}
+
+/* ===== GIỚI THIỆU ===== */
+.about-page>*{margin-top:0}
+.about-hero{display:grid;grid-template-columns:1.1fr 1fr;gap:30px;align-items:center;background:linear-gradient(120deg,#0b0b0c,#1d1a12);color:#fff;border-radius:10px;border-bottom:3px solid var(--gold);margin:22px 0 10px;overflow:hidden}
+.about-hero .hero-content{padding:44px 40px}
+.about-hero .eyebrow{color:var(--gold);letter-spacing:3px;font-size:12px}
+.about-hero h1{font-family:var(--font-head);font-size:44px;line-height:1.1;margin:12px 0}
+.about-hero h1 em{display:block;font-style:normal;color:var(--gold-light)}
+.about-hero p{color:#d6d2c4;margin-bottom:22px}
+.about-hero .btn{margin-right:8px}
+.about-hero .btn.ghost{background:transparent;color:var(--gold);border-color:var(--gold)}
+.hero-image{position:relative;align-self:stretch}
+.hero-image img{width:100%;height:100%;object-fit:cover;display:block;min-height:280px}
+.hero-badge{position:absolute;left:18px;bottom:18px;background:var(--ink);border:1px solid var(--gold);color:var(--gold);padding:10px 16px;border-radius:8px}
+.hero-badge b{font-family:var(--font-head);font-size:24px;margin-right:8px}
+.about-box{display:grid;grid-template-columns:1fr 1.2fr;gap:28px;align-items:center}
+.about-image,.team-image,.gallery-item{position:relative;overflow:hidden;border-radius:8px}
+.about-image img,.team-image img,.gallery-item img{width:100%;display:block;object-fit:cover}
+.about-info ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;margin-top:12px}
+.about-info li:before{content:"✓ ";color:var(--gold-dark);font-weight:bold}
+.about-info p{margin-top:8px;color:var(--muted)}
+.media-overlay,.gallery-overlay{position:absolute;right:10px;bottom:10px;background:var(--ink);color:var(--gold);border:1px solid var(--gold);padding:4px 12px;border-radius:5px;font-size:12.5px;cursor:pointer}
+.value-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.value-card{background:#fff;border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:10px;padding:22px}
+.value-card h3{font-family:var(--font-head);margin-bottom:8px}.value-card p{color:var(--muted);font-size:14.5px}
+.mission-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:26px 0}
+.mission-grid .box p{color:var(--muted);margin-top:8px}
+.stats-strip{display:grid;grid-template-columns:repeat(4,1fr);background:var(--ink);border-radius:10px;border-bottom:3px solid var(--gold);margin:10px 0 6px}
+.stats-strip div{text-align:center;padding:22px 8px}
+.stats-strip b{display:block;font-family:var(--font-head);font-size:30px;color:var(--gold)}
+.stats-strip span{color:var(--silver);font-size:13.5px}
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.timeline-item{background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px}
+.timeline-year{font-family:var(--font-head);font-size:26px;color:var(--gold-dark)}
+.timeline-content h3{margin:4px 0 6px;font-family:var(--font-head)}.timeline-content p{color:var(--muted);font-size:14px}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.team-card{background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.team-image img{height:220px}
+.team-info{padding:14px 18px 18px}.team-info h3{font-family:var(--font-head)}
+.team-info span{display:block;color:var(--gold-dark);font-size:13px;margin:2px 0 6px;font-weight:bold}.team-info p{color:var(--muted);font-size:14px}
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.gallery-item img{height:190px}
+.cta-box{text-align:center;background:linear-gradient(120deg,#0b0b0c,#1d1a12);color:#fff;border-radius:10px;border-bottom:3px solid var(--gold);padding:38px 20px;margin:30px 0 10px}
+.cta-box h2{font-family:var(--font-head);color:var(--gold-light);margin-bottom:8px}.cta-box p{color:#d6d2c4;margin-bottom:18px}
+.lightbox-modal{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:100}
+.lightbox-modal.active{display:flex}
+.lightbox-content{max-width:90vw;max-height:90vh;text-align:center}.lightbox-content img{max-width:90vw;max-height:80vh;border-radius:8px;border:2px solid var(--gold)}
+.lightbox-caption{color:var(--gold-light);margin-top:10px}
+.lightbox-close{position:absolute;top:18px;right:28px;font-size:38px;color:var(--gold);cursor:pointer}
+@media(max-width:900px){.about-hero,.about-box,.mission-grid{grid-template-columns:1fr}.value-grid,.team-grid{grid-template-columns:1fr}.timeline,.gallery-grid,.stats-strip{grid-template-columns:1fr 1fr}}
+.about-page .section-title{margin-top:36px}.about-page .about-hero+.section-title{margin-top:30px}
+
+/* ===== ĐĂNG NHẬP / ĐĂNG KÝ ===== */
+.form-intro{color:var(--muted);margin:-4px 0 16px;font-size:14.5px}
+.pw-wrap{position:relative}
+.pw-wrap input{padding-right:64px}
+.pw-toggle{position:absolute;right:8px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:var(--gold-dark);font:inherit;font-weight:bold;font-size:13px;cursor:pointer}
+.form-box .alert{margin:0 0 14px}
+.form-box.wide{width:620px}
+.field textarea{min-height:90px;resize:vertical}
+.field input[readonly]{background:#efebe0;color:var(--muted)}
+.form-box select{width:100%}
+
+/* Banner trang sản phẩm (dùng chung kiểu slideshow .banner, thấp hơn trang chủ) */
+.banner.banner-sp{height:300px;margin-top:6px}
+@media(max-width:800px){.banner.banner-sp{height:200px}}
