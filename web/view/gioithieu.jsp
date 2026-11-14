@@ -8,9 +8,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <<<<<<< HEAD
-<title>hello - LODI AUTHENTIC STORE</title>
+<title>Xin chào - LODI AUTHENTIC STORE</title>
 =======
-<title>hello - LODI AUTHENTIC STORE</title>
+<title>Xin chào - LODI AUTHENTIC STORE</title>
 >>>>>>> b47938d62a8bf035c22d569b2e0ab2a8818526a4
 <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/image/favicon.png">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/fonts.css">
