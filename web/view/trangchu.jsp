@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
-    import="java.util.*, model.nguoidung, modeldao.nguoidungdao, model.Banner, modeldao.BannerDAO"%>
+    import="java.util.*, model.nguoidung, modeldao.nguoidungdao, model.Banner, modeldao.BannerDAO, model.SanPhamYeuThich, modeldao.YeuThichDAO"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -41,6 +41,11 @@
     ArrayList<Banner> __banner = new BannerDAO().getBannerHienThi(Banner.TRANG_CHU);
     request.setAttribute("bannerLoi", __banner == null);
     request.setAttribute("listBanner", __banner);
+
+    // Top áo yêu thích (xếp hạng + ghim/ẩn do quản lý). DAO không ném lỗi: chưa chạy migration_yeuthich.sql
+    // thì danh sách rỗng và mục Top tự ẩn.
+    ArrayList<SanPhamYeuThich> __topYT = new YeuThichDAO().layTopHienThi();
+    request.setAttribute("listTopYT", __topYT);
 %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -116,6 +121,36 @@
 
   <div class="chips"><a href="${pageContext.request.contextPath}/nguoidungservlet">Premier League</a><a href="${pageContext.request.contextPath}/nguoidungservlet">La Liga</a><a href="${pageContext.request.contextPath}/nguoidungservlet">Serie A</a><a href="${pageContext.request.contextPath}/nguoidungservlet">Bundesliga</a><a href="${pageContext.request.contextPath}/nguoidungservlet">Ligue 1</a></div>
 
+  <%-- ===== TOP ÁO YÊU THÍCH: xếp hạng theo lượt yêu thích, quản lý ghim/ẩn ở menu "Top sản phẩm yêu thích" (luồng sản phẩm) ===== --%>
+  <c:if test="${not empty listTopYT}">
+    <span id="topyeuthich"></span>
+    <h2 class="section-title">Top áo yêu thích<small>ĐƯỢC KHÁCH HÀNG YÊU THÍCH NHẤT</small></h2>
+    <div class="grid">
+      <c:forEach var="t" items="${listTopYT}" varStatus="st">
+        <div class="card ${t.trangthai=='0'?'disabled-card':''}">
+          <a href="${pageContext.request.contextPath}/chitietsanpham?ma=${t.masanpham}" class="thumb">
+            <span class="rank-badge ${t.hang == 1 ? 'top1' : ''}">#${t.hang}</span>
+            <img src="${pageContext.request.contextPath}/image/${not empty t.hinhanh ? t.hinhanh : 'default-prod.png'}" alt="${fn:escapeXml(t.tensanpham)}">
+          </a>
+          <button type="button" class="fav-btn" data-masanpham="${t.masanpham}" aria-label="Yêu thích" title="Thêm vào danh sách yêu thích">&#9829;</button>
+          <div class="info">
+            <h3><a href="${pageContext.request.contextPath}/chitietsanpham?ma=${t.masanpham}">${t.tensanpham}</a></h3>
+            <div class="sub">${not empty t.danhmuc ? t.danhmuc : 'Authentic'} · 2026-27</div>
+            <div class="price"><fmt:formatNumber value="${t.giasanpham}" type="number" groupingUsed="true"/>đ</div>
+            <div class="love">&#9829; <span class="fav-count">${t.soluotyeuthich}</span> lượt yêu thích</div>
+            <c:choose>
+              <c:when test="${t.tongsoluong > 0 and t.trangthai == '1'}"><span class="stock in">Còn hàng</span></c:when>
+              <c:otherwise><span class="stock out">Hết hàng</span></c:otherwise>
+            </c:choose>
+            <div class="actions">
+              <a href="${pageContext.request.contextPath}/chitietsanpham?ma=${t.masanpham}" class="btn dark">Chi tiết</a>
+            </div>
+          </div>
+        </div>
+      </c:forEach>
+    </div>
+  </c:if>
+
   <span id="sp"></span>
   <h2 class="section-title">Sản phẩm bán chạy<small>BỘ SƯU TẬP 2026/27</small></h2>
   <div class="grid">
@@ -130,6 +165,7 @@
           </c:choose>
           <img src="${pageContext.request.contextPath}/image/${not empty sp.hinhanh ? sp.hinhanh : 'default-prod.png'}" alt="${fn:escapeXml(sp.tensanpham)}">
         </a>
+        <button type="button" class="fav-btn" data-masanpham="${sp.masanpham}" aria-label="Yêu thích" title="Thêm vào danh sách yêu thích">&#9829;</button>
         <div class="info">
           <h3><a href="${pageContext.request.contextPath}/chitietsanpham?ma=${sp.masanpham}">${sp.tensanpham}</a></h3>
           <div class="sub">${not empty sp.danhmuc ? sp.danhmuc : 'Authentic'} · 2026-27</div>
@@ -162,6 +198,7 @@
 
 <div class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</div>
 <script src="${pageContext.request.contextPath}/js/lodi-slideshow.js"></script>
+<script src="${pageContext.request.contextPath}/js/lodi-yeuthich.js" data-ctx="${pageContext.request.contextPath}"></script>
 <script>
         window.addEventListener("scroll",function(){
             const btn=document.querySelector(".back-top");
