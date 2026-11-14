@@ -1,0 +1,16 @@
+/* ===== YÊU THÍCH (nút tim, mục Top áo yêu thích, trang Yêu thích) ===== */
+.card{position:relative}
+.fav-btn{border:1px solid var(--line);background:#fff;color:#8f8b7d;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;font-family:inherit}
+.card .fav-btn{position:absolute;top:10px;right:10px;z-index:5;width:36px;height:36px;border-radius:50%;font-size:18px;line-height:1;background:rgba(255,255,255,.92);box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.card .fav-btn:hover,.fav-btn.fav-wide:hover{color:#c0392b;transform:scale(1.06)}
+.fav-btn.on{color:#c0392b;border-color:#e8b4ae;background:#fff}
+.fav-btn[disabled]{opacity:.6;cursor:wait}
+.fav-btn.fav-wide{position:static;width:auto;height:auto;border-radius:6px;padding:12px 20px;font-size:14px;font-weight:bold;gap:8px;margin-left:8px;display:inline-flex;vertical-align:middle}
+.fav-btn.fav-wide .fav-icon{font-size:18px}
+.rank-badge{position:absolute;top:10px;left:10px;z-index:3;min-width:34px;height:34px;padding:0 8px;border-radius:17px;background:var(--gold-grad);color:#1b1405;font-weight:bold;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 4px 10px rgba(0,0,0,.25)}
+.rank-badge.top1{background:linear-gradient(135deg,#f6e27a,#c9a24b 60%,#8a6a1c)}
+.card .love{font-size:13px;color:#a12a2a;font-weight:600;margin:2px 0 8px}
+.card .love .fav-count{font-weight:bold}
+.pin-tag{position:absolute;bottom:10px;left:10px;z-index:3;background:var(--ink);color:var(--gold);font-size:10px;letter-spacing:1px;padding:3px 8px;border-radius:3px;font-weight:bold}
+.fav-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.fav-head p{color:var(--muted);margin:0 0 6px}

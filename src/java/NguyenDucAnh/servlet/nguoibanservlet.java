@@ -76,6 +76,8 @@ public class nguoibanservlet extends HttpServlet {
                     magoc = request.getParameter("masanpham");
                 }
                 dao.xoaNhom(magoc);
+                // Sản phẩm bị xóa thì dọn luôn lượt yêu thích + cấu hình Top của sản phẩm đó.
+                new YeuThichDAO().xoaTheoMagoc(magoc);
                 session.setAttribute("success", "Xoá sản phẩm thành công (đã xoá toàn bộ các size)!");
             } else if ("update".equals(action)) {
                 // Sửa ở trang Quản lý sản phẩm chỉ sửa thông tin CHUNG (tên, ảnh, danh

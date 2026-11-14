@@ -42,6 +42,7 @@
     <li><a href="${cp}/view/gioithieu.jsp" class="${param.active == 'gioithieu' ? 'active' : ''}">Giới thiệu</a></li>
     <li><a href="${cp}/nguoidungservlet" class="${param.active == 'sanpham' ? 'active' : ''}">Sản phẩm</a></li>
     <li><a href="${cp}/magiamgiaservlet" class="${param.active == 'khuyenmai' ? 'active' : ''}">Khuyến mãi</a></li>
+    <li><a href="${cp}/yeuthichservlet" class="${param.active == 'yeuthich' ? 'active' : ''}">Yêu thích</a></li>
     <li><a href="${cp}/trangthaiservlet" class="${param.active == 'donhang' ? 'active' : ''}">Đơn hàng</a></li>
     <li><a href="${cp}/giohangservlet" class="${param.active == 'giohang' ? 'active' : ''}">Giỏ hàng</a></li>
     <li><a href="${cp}/view/thongtinlienhe.jsp" class="${param.active == 'lienhe' ? 'active' : ''}">Liên hệ</a></li>
