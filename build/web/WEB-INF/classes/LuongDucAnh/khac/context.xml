@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/pro230">
+    <!-- Pool kết nối SQL Server (Tomcat DBCP). Đổi username/password ở đây nếu đổi trong dbconnect.java. -->
+    <Resource name="jdbc/datn" auth="Container" type="javax.sql.DataSource"
+              driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+              url="jdbc:sqlserver://localhost:1433;databaseName=datn;encrypt=false"
+              username="sa" password="khanh1492009"
+              maxTotal="25" maxIdle="10" minIdle="2" maxWaitMillis="10000"
+              testOnBorrow="true" validationQuery="SELECT 1"
+              removeAbandonedOnBorrow="true" removeAbandonedTimeout="120"/>
+</Context>

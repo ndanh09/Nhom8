@@ -83,6 +83,17 @@
             .txt-gold { color:#8a6a1c; font-weight:700; }
             .empty-row td { color:#6f6f6f; padding:24px; font-style:italic; }
         
+            /* Tab chuyển giữa lương vận chuyển / lương nhân viên bán hàng */
+            .tabs { display:flex; gap:10px; margin-bottom:26px; flex-wrap:wrap; }
+            .tabs a.tab { display:inline-flex; align-items:center; gap:8px; padding:11px 22px; border-radius:8px; text-decoration:none; font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#8a6a1c; background:#f2efe4; border:1px solid rgba(201,162,75,0.5); transition:all 0.25s ease; }
+            .tabs a.tab:hover { background:rgba(201,162,75,0.15); }
+            .tabs a.tab.active { background:linear-gradient(135deg, #c9a24b, #8a6a1c); color:#000000; border-color:#c9a24b; box-shadow:0 4px 15px rgba(201,162,75,0.3); }
+            .warn-box { color:#8a5a00; background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.5); padding:14px 20px; margin-bottom:26px; font-size:13.5px; line-height:1.7; border-radius:8px; }
+            .sel-nv { min-width:230px; }
+            .btn-luu { background:rgba(201,162,75,0.12); border:1px solid rgba(201,162,75,0.5); color:#8a6a1c; padding:7px 16px; font-size:11.5px; font-weight:700; border-radius:6px; cursor:pointer; transition:all 0.2s ease; }
+            .btn-luu:hover { background:#c9a24b; color:#000000; }
+            .form-gan { display:flex; align-items:center; justify-content:center; gap:10px; margin:0; }
+        
 /* LODI: chữ trong ô chọn luôn đọc được, nền dịu mắt */
 select option,select optgroup{background:#f2efe4;color:#1c1b18}
 input,select,textarea{color:#1c1b18}
@@ -103,7 +114,9 @@ input::placeholder,textarea::placeholder{color:#8f8b7d}
             </div>
             <ul>                
                 <c:if test="${sessionScope.vaiTro == 'ADMIN'}"><li><a href="${pageContext.request.contextPath}/qtv"><i class="fa-solid fa-user-shield icon"></i><span>Quản trị viên</span></a></li></c:if>
+                <c:if test="${sessionScope.vaiTro == 'ADMIN'}"><li><a href="${pageContext.request.contextPath}/quanlyyeuthichtaikhoan"><i class="fa-solid fa-heart-circle-check icon"></i><span>Yêu thích theo tài khoản</span></a></li></c:if>
                 <c:if test="${sessionScope.vaiTro == 'QUANLY'}"><li><a href="${pageContext.request.contextPath}/nguoibanservlet"><i class="fa-solid fa-user-tag icon"></i><span>Quản lý sản phẩm</span></a></li></c:if>
+                <c:if test="${sessionScope.vaiTro == 'QUANLY'}"><li><a href="${pageContext.request.contextPath}/quanlytopyeuthich"><i class="fa-solid fa-heart icon"></i><span>Top sản phẩm yêu thích</span></a></li></c:if>
                 <c:if test="${sessionScope.vaiTro == 'QUANLY'}"><li><a href="${pageContext.request.contextPath}/quanlykhachhangservlet"><i class="fa-solid fa-users icon"></i><span>Quản lý đơn hàng</span></a></li></c:if>
                 <c:if test="${sessionScope.vaiTro == 'QUANLY'}"><li><a href="${pageContext.request.contextPath}/quanlykhohangservlet"><i class="fa-solid fa-warehouse icon"></i><span>Quản lý kho hàng</span></a></li></c:if>
                 <c:if test="${sessionScope.vaiTro == 'QUANLY'}"><li><a href="${pageContext.request.contextPath}/phieugiamgiaservlet"><i class="fa-solid fa-ticket icon"></i><span>Quản lý mã giảm giá</span></a></li></c:if>
@@ -111,6 +124,7 @@ input::placeholder,textarea::placeholder{color:#8f8b7d}
                 <c:if test="${sessionScope.vaiTro == 'QUANLY'}"><li><a href="${pageContext.request.contextPath}/capnhattrangthaiservlet"><i class="fa-solid fa-box-open icon"></i><span>Cập nhật trạng thái đơn hàng</span></a></li></c:if>
                 <c:if test="${sessionScope.vaiTro == 'QUANLY'}"><li><a href="${pageContext.request.contextPath}/quanlyhoadonservlet"><i class="fa-solid fa-file-invoice icon"></i><span>Quản lý hóa đơn</span></a></li></c:if>
                 <c:if test="${sessionScope.vaiTro == 'ADMIN'}"><li><a href="${pageContext.request.contextPath}/quanlyvanchuyenadmin"><i class="fa-solid fa-truck-fast icon"></i><span>Quản lý vận chuyển</span></a></li></c:if>
+                <c:if test="${sessionScope.vaiTro == 'ADMIN'}"><li><a href="${pageContext.request.contextPath}/quanlynhanvienbanhang"><i class="fa-solid fa-user-tie icon"></i><span>Quản lý nhân viên bán hàng</span></a></li></c:if>
                 <c:if test="${sessionScope.vaiTro == 'ADMIN'}"><li class="active"><a href="${pageContext.request.contextPath}/luongvanchuyenadmin"><i class="fa-solid fa-sack-dollar icon"></i><span>Quản lý nhân sự và lương</span></a></li></c:if>
                 <c:if test="${sessionScope.vaiTro == 'ADMIN'}"><li><a href="${pageContext.request.contextPath}/quanlybanner"><i class="fa-solid fa-images icon"></i><span>Quản lý banner</span></a></li></c:if>
                 <c:if test="${sessionScope.vaiTro == 'DOANHTHU'}"><li><a href="${pageContext.request.contextPath}/quanlytrochuyen"><i class="fa-solid fa-comments icon"></i><span>Quản lý trò chuyện</span></a></li></c:if>
@@ -121,6 +135,11 @@ input::placeholder,textarea::placeholder{color:#8f8b7d}
         <div class="container">
             <h1>Lương Thưởng Vận Chuyển</h1>
             <div class="title-line"></div>
+
+            <div class="tabs">
+                <a class="tab active" href="${pageContext.request.contextPath}/luongvanchuyenadmin"><i class="fa-solid fa-truck-fast"></i> Người vận chuyển</a>
+                <a class="tab" href="${pageContext.request.contextPath}/luongnhanvienbanhang"><i class="fa-solid fa-user-tie"></i> Nhân viên bán hàng</a>
+            </div>
 
             <c:if test="${not empty sessionScope.success}">
                 <div style="color:#2f7d4a; background:rgba(46, 204, 113, 0.05); border:1px solid rgba(46, 204, 113, 0.4); padding:14px 20px; margin-bottom:30px; font-size:14px; display:flex; align-items:center; gap:10px; border-radius:8px;">
