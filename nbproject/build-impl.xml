@@ -986,7 +986,6 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.mssql-jdbc-13.4.0.jre11-sources.jar}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.mssql-jdbc-13.4.0.jre11.jar}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.mssql-jdbc-13.4.0.jre8-javadoc.jar}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${file.reference.mssql-jdbc-13.4.0.jre8-sources.jar}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.mssql-jdbc-13.4.0.jre8.jar}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.jakarta.servlet.jsp.jstl-3.0.1.jar}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.jakarta.servlet.jsp.jstl-api-3.0.0.jar}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
@@ -998,7 +997,6 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.mssql-jdbc-13.4.0.jre11-sources.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.mssql-jdbc-13.4.0.jre11.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.mssql-jdbc-13.4.0.jre8-javadoc.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.mssql-jdbc-13.4.0.jre8-sources.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.mssql-jdbc-13.4.0.jre8.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.jakarta.servlet.jsp.jstl-3.0.1.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.jakarta.servlet.jsp.jstl-api-3.0.0.jar}" todir="${build.web.dir}/WEB-INF/lib"/>

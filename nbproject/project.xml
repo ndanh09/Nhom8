@@ -23,10 +23,6 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.mssql-jdbc-13.4.0.jre8-sources.jar}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
                     <file>${file.reference.mssql-jdbc-13.4.0.jre8.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>

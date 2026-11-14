@@ -50,6 +50,7 @@
         </div>
         <p style="margin-top:18px">
           <button type="button" class="btn" id="btnAddCart">Thêm vào giỏ hàng</button>
+          <button type="button" class="fav-btn fav-wide" data-masanpham="${sp.masanpham}" aria-label="Yêu thích"><span class="fav-icon">&#9829;</span><span class="fav-text">Yêu thích</span></button>
           <a href="${pageContext.request.contextPath}/nguoidungservlet" class="btn dark">Quay lại danh sách</a>
         </p>
       </div>
@@ -287,5 +288,6 @@
                 }
             })();
         </script>
+<script src="${pageContext.request.contextPath}/js/lodi-yeuthich.js" data-ctx="${pageContext.request.contextPath}"></script>
 </body>
 </html>

@@ -12,7 +12,7 @@ public class dbconnect {
     public static final String PORT = "1433";
     public static final String DBNAME = "datn";
     public static final String USERNAME = "sa";
-    public static final String PASSWORD = "khanh1492009";
+    public static final String PASSWORD = "31122009";
 
     // Pool kết nối do Tomcat quản lý (khai báo trong web/META-INF/context.xml, tên jdbc/datn).
     // Mở kết nối SQL Server mới mỗi lần gọi rất chậm; dùng pool thì chỉ lần đầu mới chậm.

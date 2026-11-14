@@ -77,6 +77,7 @@
           </c:choose>
           <img src="${pageContext.request.contextPath}/image/${not empty sp.hinhanh ? sp.hinhanh : 'default-prod.png'}" alt="${fn:escapeXml(sp.tensanpham)}">
         </a>
+        <button type="button" class="fav-btn" data-masanpham="${sp.masanpham}" aria-label="Yêu thích" title="Thêm vào danh sách yêu thích">&#9829;</button>
         <div class="info">
           <h3><a href="${pageContext.request.contextPath}/chitietsanpham?ma=${sp.masanpham}">${sp.tensanpham}</a></h3>
           <div class="sub">
@@ -308,5 +309,6 @@
 <script>
 window.addEventListener("scroll",function(){var b=document.querySelector(".back-top");if(b){b.style.display=window.scrollY>300?"flex":"none";}});
 </script>
+<script src="${pageContext.request.contextPath}/js/lodi-yeuthich.js" data-ctx="${pageContext.request.contextPath}"></script>
 </body>
 </html>
