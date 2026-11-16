@@ -69,6 +69,10 @@ public class ChiTietSanPhamServlet extends HttpServlet {
         int cartCount = (maKH == null || maKH.trim().isEmpty()) ? 0 : ghDAO.countCart(maKH);
         request.setAttribute("cartCount", cartCount);
 
+        // Mục "Đánh giá & nhận xét": điểm trung bình, phân bố sao, danh sách (lọc theo ?sao=1..5)
+        // và trạng thái nút "Viết đánh giá". Chỉ lấy đánh giá đang hiển thị.
+        DanhGiaServlet.napDanhGiaSanPham(request, ma, request.getParameter("sao"));
+
         request.getRequestDispatcher("view/chitietsanpham.jsp")
                 .forward(request, response);
     }

@@ -25,3 +25,4 @@ replay_pid*
 
 # Local database connection - do not sync
 /src/java/**/connect/
+/dist/

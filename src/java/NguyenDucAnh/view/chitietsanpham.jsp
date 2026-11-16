@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/fonts.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/lodi.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/lodi-extra.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/lodi-danhgia.css">
 </head>
 <body>
 <jsp:include page="_lodi_header.jsp"><jsp:param name="active" value="sanpham"/></jsp:include>
@@ -56,6 +57,7 @@
       </div>
     </div>
     <div class="desc"><h2>Mô tả sản phẩm</h2><p style="margin-top:10px">Áo đấu Authentic chính hãng của LODI AUTHENTIC STORE, dành cho người hâm mộ yêu thích sự chỉn chu và đẳng cấp. Chất liệu thoáng khí, form áo thể thao vừa vặn, hoàn thiện tinh xảo - phù hợp cổ vũ, sưu tầm và mặc hằng ngày.</p></div>
+    <jsp:include page="danhGia.jsp"/>
   </c:if>
 </main>
 

@@ -23,6 +23,7 @@
       <c:choose>
         <c:when test="${not empty sessionScope.user}">
           <span class="hello" id="userMenu">Xin chào, <b>${fn:escapeXml(sessionScope.user.hoten)}</b></span>
+          <a href="${cp}/danhgia?action=cuatoi">Đánh giá của tôi</a>
           <a href="${cp}/dangxuatservlet">Đăng xuất</a>
         </c:when>
         <c:when test="${sessionScope.isAdmin}">
